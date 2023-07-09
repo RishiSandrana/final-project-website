@@ -1,0 +1,7 @@
+---
+title: "About Me"
+---
+
+My name is **Rishi Sandrana** and I am a rising senior at Walter Payton College Prep. Feel free to take a look at [my GitHub](https://github.com/RishiSandrana) and contact me at rishi.sandrana@gmail.com for any questions.
+
+This project was created as a part of [Kane's Data Science Bootcamp](https://bootcamp.davidkane.info).

@@ -5,9 +5,10 @@ title: "Home"
 ```{r}
 #| echo: false
 #| message: false
+#| warning: false
 library(tidyverse)
-library(dplyr)
 library(plotly)
+library(ggthemes)
 ```
 
 ```{r}
@@ -36,9 +37,18 @@ mergedData <- iqData |>
 
 ```{r}
 #| echo: false
+#| message: false
+#| warning: false
+
+model1 <- lm(rank2021 ~ score, data = mergedData)
+intercept <- coef(model1)[1]
+slope <- coef(model1)[2]
+equation <- paste("Rank =", round(intercept, 2), "+", round(slope, 2), "* Score")
+
 plot1 <- mergedData |>
   ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) +
-  geom_point(alpha = 0.9) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", color = "orange", se = FALSE) +
   guides(color = "none", size = "none") +
   labs(
     title = "Test Scores and Education Ranking",
@@ -46,7 +56,15 @@ plot1 <- mergedData |>
     y = "Education Ranking",
     caption = "Our World in Data (2016)\nWorld Population Review (2023)"
   ) +
-  theme_classic()
+  theme_clean() +
+  annotate(
+    "text", 
+    x = max(mergedData$score), 
+    y = max(mergedData$rank2021),
+    label = equation, 
+    hjust = 1
+  )
 
-ggplotly(plot1)
+plot1
+# ggplotly(plot1)
 ```

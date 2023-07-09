@@ -58,18 +58,14 @@ plot1 <- mergedData |>
     y = "Education Ranking",
     caption = "Our World in Data (2016)\nWorld Population Review (2023)"
   ) +
-  theme_clean() +
   annotate(
     "text", 
-    x = max(mergedData$score), 
-    y = max(mergedData$rank2021),
-    label = paste(equation1, "\n r =", r1),
-    hjust = 1,
-    vjust = 1
+    x = max(mergedData$score) - 35, 
+    y = max(mergedData$rank2021) - 1,
+    label = paste(equation1, "\n                                 r =", r1),
   )
 
-plot1
-# ggplotly(plot1)
+ggplotly(plot1) 
 ```
 
 ```{r}
@@ -95,18 +91,14 @@ plot2 <- mergedData |>
     y = "Education Ranking",
     caption = "World Population Review (2023)"
   ) +
-  theme_clean() +
   annotate(
     "text", 
-    x = max(mergedData$iq), 
-    y = max(mergedData$rank2021),
-    label = paste(equation2, "\n r =", r2),
-    hjust = 1,
-    vjust = 1
+    x = max(mergedData$iq) - 6, 
+    y = max(mergedData$rank2021) - 1,
+    label = paste(equation1, "\n                                 r =", r1),
   )
 
-plot2
-# ggplotly(plot2)
+ggplotly(plot2)
 ```
 
 ```{r}
@@ -132,16 +124,12 @@ plot3 <- mergedData |>
     y = "Average Test Scores in Math and Science",
     caption = "Our World in Data (2016)\nWorld Population Review (2023)"
   ) +
-  theme_clean() +
   annotate(
     "text", 
-    x = max(mergedData$iq), 
-    y = min(mergedData$score),
-    label = paste(equation3, "\n r =", r3),
-    hjust = 1,
-    vjust = -0.5
+    x = max(mergedData$iq) - 5, 
+    y = min(mergedData$score) + 5,
+    label = paste(equation3, "\n                               r =", r3),
   )
 
-plot3
-# ggplotly(plot3)
+ggplotly(plot3)
 ```

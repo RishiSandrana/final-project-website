@@ -59,14 +59,16 @@ plot1 <- mergedData |>
     caption = "Our World in Data (2016)\nWorld Population Review (2023)"
   ) +
   annotate(
-    "text", 
-    x = max(mergedData$score) - 35, 
+    "text",
+    x = max(mergedData$score) - 35,
     y = max(mergedData$rank2021) - 1,
-    label = paste(equation1, "\n                                 r =", r1),
+    label = paste(equation1, "\n                                 r =", r1)
   )
 
 ggplotly(plot1) 
 ```
+
+​​
 
 ```{r}
 #| echo: false
@@ -100,6 +102,8 @@ plot2 <- mergedData |>
 
 ggplotly(plot2)
 ```
+
+​
 
 ```{r}
 #| echo: false

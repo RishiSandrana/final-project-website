@@ -41,9 +41,10 @@ mergedData <- iqData |>
 #| warning: false
 
 model1 <- lm(rank2021 ~ score, data = mergedData)
-intercept <- coef(model1)[1]
-slope <- coef(model1)[2]
-equation <- paste("Rank =", round(intercept, 2), "+", round(slope, 2), "* Score")
+intercept1 <- coef(model1)[1]
+slope1 <- coef(model1)[2]
+equation1 <- paste("Rank =", round(intercept1, 2), "+", round(slope1, 2), "* Score")
+r1 <- round(cor(mergedData$rank2021, fitted(model1)), 2)
 
 plot1 <- mergedData |>
   ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) +
@@ -61,7 +62,7 @@ plot1 <- mergedData |>
     "text", 
     x = max(mergedData$score), 
     y = max(mergedData$rank2021),
-    label = equation, 
+    label = paste(equation1, "\n r =", r1),
     hjust = 1
   )
 

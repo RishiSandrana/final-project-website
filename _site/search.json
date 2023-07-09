@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Sources",
     "section": "",
-    "text": "The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country’s average IQ and its average test scores in math and science, indicating a perfect positive relationship. Additionally, we find a medium positive linear relationship between a country’s average test scores and its education ranking, as well as between a country’s average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.\n\n\n\n\n\n\n​\n\n\n\n\n\n\n​"
+    "text": "The data utilized in this project is sourced from the following references::\n\nAverage test score in mathematics and science vs. GDP per capita, 2016\nEducation Rankings by Country 2023\nAverage IQ by Country 2023\n\nWe integrated the datasets by performing inner joins based on the shared country identifier, and through careful data preprocessing (including data cleaning, column selection, renaming, and handling missing values), we were able to create a consolidated dataset that enabled us to explore the relationship between IQ, test scores, and education ranking at the country level."
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "My name is Rishi Sandrana and I am a rising senior at Walter Payton College Prep. Feel free to take a look at my GitHub and contact me at rishi.sandrana@gmail.com for any questions.\nThis project was created as a part of Kane’s Data Science Bootcamp."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country’s average IQ and its average test scores in math and science, indicating a perfect positive relationship. Additionally, we observe a medium positive linear relationship between a country’s average test scores and its education ranking, as well as between a country’s average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.\n\n\n\n\n\n\n​\n\n\n\n\n\n\n​"
   }
 ]

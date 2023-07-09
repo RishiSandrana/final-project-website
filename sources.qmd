@@ -1,0 +1,13 @@
+---
+title: "Sources"
+---
+
+The data utilized in this project is sourced from the following references::
+
+-   [Average test score in mathematics and science vs. GDP per capita, 2016](https://ourworldindata.org/grapher/average-test-score-in-mathematics-and-science-vs-gdp-per-capita)
+
+-   [Education Rankings by Country 2023](https://worldpopulationreview.com/country-rankings/education-rankings-by-country)
+
+-   [Average IQ by Country 2023](https://worldpopulationreview.com/country-rankings/average-iq-by-country)
+
+We integrated the datasets by performing inner joins based on the shared country identifier, and through careful data preprocessing (including data cleaning, column selection, renaming, and handling missing values), we were able to create a consolidated dataset that enabled us to explore the relationship between IQ, test scores, and education ranking at the country level.

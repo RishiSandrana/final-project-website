@@ -1,3 +1,52 @@
 ---
 title: "Home"
 ---
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(dplyr)
+library(plotly)
+```
+
+```{r}
+#| echo: false
+#| message: false
+iqData <- read_csv("data/IQRankings.csv")
+rankingData <- read_csv("data/EducationRankings.csv")
+scoresData <- read_csv("data/TestScoreData.csv")
+
+rankingData <- rankingData |>
+  select(country, rank2021, pop2023)
+
+iqData <- iqData |>
+  select(country, iq)
+
+scoresData <- scoresData |>
+  rename(country = Entity) |>
+  rename_at(7, ~ "score") |>
+  drop_na() |>
+  select(country, score)
+
+mergedData <- iqData |>
+  inner_join(scoresData, by = "country") |>
+  inner_join(rankingData, by = "country")
+```
+
+```{r}
+#| echo: false
+plot1 <- mergedData |>
+  ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) +
+  geom_point(alpha = 0.9) +
+  guides(color = "none", size = "none") +
+  labs(
+    title = "Test Scores and Education Ranking",
+    x = "Average Test Scores in Math and Science",
+    y = "Education Ranking",
+    caption = "Our World in Data (2016)\nWorld Population Review (2023)"
+  ) +
+  theme_classic()
+
+ggplotly(plot1)
+```

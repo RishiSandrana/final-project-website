@@ -53,6 +53,7 @@ plot1 <- mergedData |>
   guides(color = "none", size = "none") +
   labs(
     title = "Test Scores and Education Ranking",
+    subtitle = "There is a medium correlation between a country's test scores and its ranking.",
     x = "Average Test Scores in Math and Science",
     y = "Education Ranking",
     caption = "Our World in Data (2016)\nWorld Population Review (2023)"
@@ -63,9 +64,84 @@ plot1 <- mergedData |>
     x = max(mergedData$score), 
     y = max(mergedData$rank2021),
     label = paste(equation1, "\n r =", r1),
-    hjust = 1
+    hjust = 1,
+    vjust = 1
   )
 
 plot1
 # ggplotly(plot1)
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+model2 <- lm(rank2021 ~ iq, data = mergedData)
+intercept2 <- coef(model2)[1]
+slope2 <- coef(model2)[2]
+equation2 <- paste("Rank =", round(intercept2, 2), "+", round(slope2, 2), "* IQ")
+r2 <- round(cor(mergedData$rank2021, fitted(model2)), 2)
+
+plot2 <- mergedData |>
+  ggplot(aes(x = iq, y = rank2021, size = pop2023, color = country)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", color = "orange", se = FALSE) +
+  guides(color = "none", size = "none") +
+  labs(
+    title = "IQ and Education Ranking",
+    subtitle = "There is a medium correlation between a country's IQ and its ranking.",
+    x = "Average IQ",
+    y = "Education Ranking",
+    caption = "World Population Review (2023)"
+  ) +
+  theme_clean() +
+  annotate(
+    "text", 
+    x = max(mergedData$iq), 
+    y = max(mergedData$rank2021),
+    label = paste(equation2, "\n r =", r2),
+    hjust = 1,
+    vjust = 1
+  )
+
+plot2
+# ggplotly(plot2)
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+model3 <- lm(iq ~ score, data = mergedData)
+intercept3 <- coef(model3)[1]
+slope3 <- coef(model3)[2]
+equation3 <- paste("Score =", round(intercept3, 2), "+", round(slope3, 2), "* IQ")
+r3 <- round(cor(mergedData$score, fitted(model3)), 2)
+
+plot3 <- mergedData |>
+  ggplot(aes(x = iq, y = score, size = pop2023, color = country)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", color = "orange", se = FALSE) +
+  guides(color = "none", size = "none") +
+  labs(
+    title = "IQ and Test Scores",
+    subtitle = "IQ and test scores are almost perfectly correlated.",
+    x = "Average IQ",
+    y = "Average Test Scores in Math and Science",
+    caption = "Our World in Data (2016)\nWorld Population Review (2023)"
+  ) +
+  theme_clean() +
+  annotate(
+    "text", 
+    x = max(mergedData$iq), 
+    y = min(mergedData$score),
+    label = paste(equation3, "\n r =", r3),
+    hjust = 1,
+    vjust = -0.5
+  )
+
+plot3
+# ggplotly(plot3)
 ```

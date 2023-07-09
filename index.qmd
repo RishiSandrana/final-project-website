@@ -47,8 +47,8 @@ equation1 <- paste("Rank =", round(intercept1, 2), "+", round(slope1, 2), "* Sco
 r1 <- round(cor(mergedData$rank2021, fitted(model1)), 2)
 
 plot1 <- mergedData |>
-  ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) +
-  geom_point(alpha = 0.7) +
+  ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) + 
+  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "Score:", score, "\n", "Rank:", rank2021))) +
   geom_smooth(method = "lm", color = "orange", se = FALSE) +
   guides(color = "none", size = "none") +
   labs(
@@ -65,10 +65,10 @@ plot1 <- mergedData |>
     label = paste(equation1, "\n                                 r =", r1)
   )
 
-ggplotly(plot1) 
+ggplotly(plot1, tooltip = "text") 
 ```
 
-​​
+​
 
 ```{r}
 #| echo: false
@@ -83,7 +83,7 @@ r2 <- round(cor(mergedData$rank2021, fitted(model2)), 2)
 
 plot2 <- mergedData |>
   ggplot(aes(x = iq, y = rank2021, size = pop2023, color = country)) +
-  geom_point(alpha = 0.7) +
+  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "IQ:", iq, "\n", "Rank:", rank2021))) +
   geom_smooth(method = "lm", color = "orange", se = FALSE) +
   guides(color = "none", size = "none") +
   labs(
@@ -95,12 +95,12 @@ plot2 <- mergedData |>
   ) +
   annotate(
     "text", 
-    x = max(mergedData$iq) - 6, 
+    x = max(mergedData$iq) - 5, 
     y = max(mergedData$rank2021) - 1,
-    label = paste(equation1, "\n                                 r =", r1),
+    label = paste(equation2, "\n                            r =", r2),
   )
 
-ggplotly(plot2)
+ggplotly(plot2, tooltip = "text")
 ```
 
 ​
@@ -118,7 +118,7 @@ r3 <- round(cor(mergedData$score, fitted(model3)), 2)
 
 plot3 <- mergedData |>
   ggplot(aes(x = iq, y = score, size = pop2023, color = country)) +
-  geom_point(alpha = 0.7) +
+  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "Score:", score, "\n", "IQ:", iq))) +
   geom_smooth(method = "lm", color = "orange", se = FALSE) +
   guides(color = "none", size = "none") +
   labs(
@@ -135,5 +135,5 @@ plot3 <- mergedData |>
     label = paste(equation3, "\n                               r =", r3),
   )
 
-ggplotly(plot3)
+ggplotly(plot3, tooltip = "text")
 ```

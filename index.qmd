@@ -115,7 +115,7 @@ model3 <- lm(iq ~ score, data = mergedData)
 intercept3 <- coef(model3)[1]
 slope3 <- coef(model3)[2]
 equation3 <- paste("Score =", round(intercept3, 2), "+", round(slope3, 2), "* IQ")
-r3 <- round(cor(mergedData$score, fitted(model3)), 2)
+r3 <- round(cor(mergedData$iq, fitted(model3)), 2)
 
 plot3 <- mergedData |>
   ggplot(aes(x = iq, y = score, size = pop2023, color = country)) +
@@ -133,7 +133,7 @@ plot3 <- mergedData |>
     "text", 
     x = max(mergedData$iq) - 5, 
     y = min(mergedData$score) + 5,
-    label = paste(equation3, "\n                               r =", r3),
+    label = paste(equation3, "\n                          r =", r3),
   )
 
 ggplotly(plot3, tooltip = "text")

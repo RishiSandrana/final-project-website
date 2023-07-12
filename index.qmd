@@ -2,7 +2,7 @@
 title: "Home"
 ---
 
-The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country's average IQ and its average test scores in math and science, indicating a perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country's average test scores and its education ranking, as well as between a country's average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.
+The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country's average IQ and its average test scores in math and science, indicating an almost perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country's average test scores and its education ranking, as well as between a country's average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.
 
 ```{r}
 #| echo: false
@@ -15,13 +15,15 @@ library(plotly)
 ```{r}
 #| echo: false
 #| warning: false
-mergedData <- read_rds(file = "mergedData.rds") |>
+
+rankingData <- read_csv("data/EducationRankings.csv") |>
+  select(country, rank2021, pop2023) |>
   rename(region = country) |>
   mutate(region = if_else(region == "United States", "USA", region)) |>
   mutate(region = if_else(region == "United Kingdom", "UK", region))
 
 mapData <- map_data("world") |>
-  left_join(mergedData, by = "region")
+  left_join(rankingData, by = "region")
 
 map1 <- mapData |>
   ggplot(aes(x = long, y = lat, group = group)) +

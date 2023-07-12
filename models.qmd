@@ -7,54 +7,31 @@ title: "Models"
 #| message: false
 #| warning: false
 library(tidyverse)
-library(plotly)
-
-iqData <- read_csv("data/IQRankings.csv")
-rankingData <- read_csv("data/EducationRankings.csv")
-scoresData <- read_csv("data/TestScoreData.csv")
-
-rankingData <- rankingData |>
-  select(country, rank2021, pop2023)
-
-iqData <- iqData |>
-  select(country, iq)
-
-scoresData <- scoresData |>
-  rename(country = Entity) |>
-  rename_at(7, ~ "score") |>
-  drop_na() |>
-  select(country, score)
-
-mergedData <- iqData |>
-  inner_join(scoresData, by = "country") |>
-  inner_join(rankingData, by = "country")
-
-model1 <- lm(rank2021 ~ score, data = mergedData)
-intercept1 <- coef(model1)[1]
-slope1 <- coef(model1)[2]
-equation1 <- paste("Rank =", round(intercept1, 2), "+", round(slope1, 2), "* Score")
-r1 <- round(cor(mergedData$rank2021, fitted(model1)), 2)
-
-model2 <- lm(rank2021 ~ iq, data = mergedData)
-intercept2 <- coef(model2)[1]
-slope2 <- coef(model2)[2]
-equation2 <- paste("Rank =", round(intercept2, 2), "+", round(slope2, 2), "* IQ")
-r2 <- round(cor(mergedData$rank2021, fitted(model2)), 2)
-
-model3 <- lm(iq ~ score, data = mergedData)
-intercept3 <- coef(model3)[1]
-slope3 <- coef(model3)[2]
-equation3 <- paste("Score =", round(intercept3, 2), "+", round(slope3, 2), "* IQ")
-r3 <- round(cor(mergedData$score, fitted(model3)), 2)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
 ```
 
-We develop a linear regression model for each plot using the `lm()` function built into R. We then find Pearson's correlation coefficient to measure the strength of the relationship between our variables of interest.
-
-$y_i = \beta_0 + \beta_1X_i + \epsilon_i$
 
 ```{r}
 #| echo: false
-summary(model1)
-summary(model2)
-summary(model3)
+#| message: false
+#| warning: false
+
+mergedData <- read_rds(file = "mergedData.rds")
+
+model1 <- lm(rank2021 ~ score, data = mergedData)
+model2 <- lm(rank2021 ~ iq, data = mergedData)
+model3 <- lm(iq ~ score, data = mergedData)
+```
+
+We develop a linear regression model for each plot using the `lm()` function built into R. We then find Pearson's correlation coefficient $(R)$ to measure the strength of the relationship between our variables of interest.
+
+$$y_i = \beta_0 + \beta_1X_i + \epsilon_i$$
+with $y = dependent\:variable$, $\beta_0 = intercept$, $\beta_1 = regression\:coefficient$, $X = independent\:variable$, and $\epsilon = error$
+
+```{r}
+#| echo: false
+tab_model(model1, model2, dv.labels = c("Education Ranking"))
+tab_model(model3, dv.labels = c("IQ"))
 ```

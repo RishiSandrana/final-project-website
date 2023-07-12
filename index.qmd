@@ -2,8 +2,6 @@
 title: "Home"
 ---
 
-The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country's average IQ and its average test scores in math and science, indicating an almost perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country's average test scores and its education ranking, as well as between a country's average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.
-
 ```{r}
 #| echo: false
 #| message: false
@@ -44,3 +42,4 @@ ggplotly(map1, tooltip = "text") |>
                                     'The United States is ranked as having the highest quality of education.',
                                     '</sup>')))
 ```
+The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country's average IQ and its average test scores in math and science, indicating an almost perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country's average test scores and its education ranking, as well as between a country's average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.

@@ -14,26 +14,31 @@ library(plotly)
 
 ```{r}
 #| echo: false
+#| warning: false
 mergedData <- read_rds(file = "mergedData.rds") |>
-  rename(region = country)
+  rename(region = country) |>
+  mutate(region = if_else(region == "United States", "USA", region)) |>
+  mutate(region = if_else(region == "United Kingdom", "UK", region))
 
 mapData <- map_data("world") |>
-  inner_join(mergedData, by = "region")
-
-mergedData
-mapData
+  left_join(mergedData, by = "region")
 
 map1 <- mapData |>
   ggplot(aes(x = long, y = lat, group = group)) +
-  geom_polygon(aes(fill = rank2021), color = "black") +
-  coord_map("mercator") +
-  theme_void() +
+  geom_polygon(aes(fill = rank2021, text = paste(region, "\n", "Rank:", rank2021)), color = "black") +
+  theme_minimal() +
   theme(axis.text = element_blank(),
         axis.title = element_blank()) + 
   labs(
     title = "Education Ranking by Country",
+    subtitle = "The United States is ranked as having the highest quality of education.",
     fill = "Education Ranking"
   )
 
-map1
+ggplotly(map1, tooltip = "text") |>
+    layout(title = list(text = paste0('Education Ranking by Country',
+                                    '<br>',
+                                    '<sup>',
+                                    'The United States is ranked as having the highest quality of education.',
+                                    '</sup>')))
 ```

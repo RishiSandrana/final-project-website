@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country’s average IQ and its average test scores in math and science, indicating a perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country’s average test scores and its education ranking, as well as between a country’s average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis.\n\n\n\n\n\n\n​\n\n\n\n\n\n\n​"
+    "text": "The goal of this project is to analyze the relationship between test scores, IQ, and education ranking across different countries. We observe a strong positive linear association between a country’s average IQ and its average test scores in math and science, indicating a perfect positive relationship. Additionally, we observe a moderate positive linear relationship between a country’s average test scores and its education ranking, as well as between a country’s average IQ and its education ranking. It is worth noting that despite the decreasing trend of the line of best fit, countries with higher education rankings have lower values on the y-axis."
   },
   {
     "objectID": "about.html",
@@ -26,5 +26,12 @@
     "title": "Models",
     "section": "",
     "text": "We develop a linear regression model for each plot using the lm() function built into R. We then find Pearson’s correlation coefficient to measure the strength of the relationship between our variables of interest.\n\\(y_i = \\beta_0 + \\beta_1X_i + \\epsilon_i\\)\n\n\n\nCall:\nlm(formula = rank2021 ~ score, data = mergedData)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-29.939 -11.376  -3.007  11.082  30.579 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 128.6747    16.1218   7.981 1.06e-10 ***\nscore        -0.2128     0.0349  -6.098 1.19e-07 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 15 on 54 degrees of freedom\nMultiple R-squared:  0.4078,    Adjusted R-squared:  0.3968 \nF-statistic: 37.19 on 1 and 54 DF,  p-value: 1.187e-07\n\n\n\nCall:\nlm(formula = rank2021 ~ iq, data = mergedData)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-29.357 -10.726  -3.878  10.391  31.428 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 156.8357    19.9725   7.853 1.71e-10 ***\niq           -1.3718     0.2169  -6.325 5.11e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 14.78 on 54 degrees of freedom\nMultiple R-squared:  0.4256,    Adjusted R-squared:  0.4149 \nF-statistic: 40.01 on 1 and 54 DF,  p-value: 5.111e-08\n\n\n\nCall:\nlm(formula = iq ~ score, data = mergedData)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-10.994  -1.366   0.018   1.490  11.002 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 25.031639   3.976186   6.295 5.71e-08 ***\nscore        0.145299   0.008607  16.882  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.7 on 54 degrees of freedom\nMultiple R-squared:  0.8407,    Adjusted R-squared:  0.8378 \nF-statistic:   285 on 1 and 54 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "plots.html",
+    "href": "plots.html",
+    "title": "Plots",
+    "section": "",
+    "text": "​\n\n\n\n\n\n\n​"
   }
 ]

@@ -14,127 +14,21 @@ library(plotly)
 
 ```{r}
 #| echo: false
-#| message: false
-iqData <- read_csv("data/IQRankings.csv")
-rankingData <- read_csv("data/EducationRankings.csv")
-scoresData <- read_csv("data/TestScoreData.csv")
+mergedData <- read_rds(file = "mergedData.rds") |>
+  rename(region = country)
 
-rankingData <- rankingData |>
-  select(country, rank2021, pop2023)
+mapData <- map_data("world") |>
+  inner_join(mergedData, by = "region")
 
-iqData <- iqData |>
-  select(country, iq)
-
-scoresData <- scoresData |>
-  rename(country = Entity) |>
-  rename_at(7, ~ "score") |>
-  drop_na() |>
-  select(country, score)
-
-mergedData <- iqData |>
-  inner_join(scoresData, by = "country") |>
-  inner_join(rankingData, by = "country")
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-model1 <- lm(rank2021 ~ score, data = mergedData)
-intercept1 <- coef(model1)[1]
-slope1 <- coef(model1)[2]
-equation1 <- paste("Rank =", round(intercept1, 2), "+", round(slope1, 2), "* Score")
-r1 <- round(cor(mergedData$rank2021, fitted(model1)), 2)
-
-plot1 <- mergedData |>
-  ggplot(aes(x = score, y = rank2021, size = pop2023, color = country)) + 
-  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "Score:", score, "\n", "Rank:", rank2021))) +
-  geom_smooth(method = "lm", color = "orange", se = FALSE) +
-  guides(color = "none", size = "none") +
+map1 <- mapData |>
+  ggplot(aes(x = long, y = lat, group = group)) +
+  geom_polygon(aes(fill = rank2021), color = "black") +
+  coord_map("mercator") +
+  theme_void() +
+  theme(axis.text = element_blank(),
+        axis.title = element_blank()) + 
   labs(
-    title = "Test Scores and Education Ranking",
-    subtitle = "There is a medium correlation between a country's test scores and its ranking.",
-    x = "Average Test Scores in Math and Science",
-    y = "Education Ranking",
-    caption = "Our World in Data (2016)\nWorld Population Review (2023)"
-  ) +
-  annotate(
-    "text",
-    x = max(mergedData$score) - 35,
-    y = max(mergedData$rank2021) - 1,
-    label = paste(equation1, "\n                                 r =", r1)
+    title = "Education Ranking by Country",
+    fill = "Education Ranking"
   )
-
-ggplotly(plot1, tooltip = "text") 
-```
-
-​
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-model2 <- lm(rank2021 ~ iq, data = mergedData)
-intercept2 <- coef(model2)[1]
-slope2 <- coef(model2)[2]
-equation2 <- paste("Rank =", round(intercept2, 2), "+", round(slope2, 2), "* IQ")
-r2 <- round(cor(mergedData$rank2021, fitted(model2)), 2)
-
-plot2 <- mergedData |>
-  ggplot(aes(x = iq, y = rank2021, size = pop2023, color = country)) +
-  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "IQ:", iq, "\n", "Rank:", rank2021))) +
-  geom_smooth(method = "lm", color = "orange", se = FALSE) +
-  guides(color = "none", size = "none") +
-  labs(
-    title = "IQ and Education Ranking",
-    subtitle = "There is a medium correlation between a country's IQ and its ranking.",
-    x = "Average IQ",
-    y = "Education Ranking",
-    caption = "World Population Review (2023)"
-  ) +
-  annotate(
-    "text", 
-    x = max(mergedData$iq) - 6, 
-    y = max(mergedData$rank2021) - 1,
-    label = paste(equation2, "\n                            r =", r2),
-  )
-
-ggplotly(plot2, tooltip = "text")
-```
-
-​
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-model3 <- lm(iq ~ score, data = mergedData)
-intercept3 <- coef(model3)[1]
-slope3 <- coef(model3)[2]
-equation3 <- paste("Score =", round(intercept3, 2), "+", round(slope3, 2), "* IQ")
-r3 <- round(cor(mergedData$iq, fitted(model3)), 2)
-
-plot3 <- mergedData |>
-  ggplot(aes(x = iq, y = score, size = pop2023, color = country)) +
-  geom_point(alpha = 0.7, aes(text = paste(country, "\n", "Score:", score, "\n", "IQ:", iq))) +
-  geom_smooth(method = "lm", color = "orange", se = FALSE) +
-  guides(color = "none", size = "none") +
-  labs(
-    title = "IQ and Test Scores",
-    subtitle = "IQ and test scores are almost perfectly correlated.",
-    x = "Average IQ",
-    y = "Average Test Scores in Math and Science",
-    caption = "Our World in Data (2016)\nWorld Population Review (2023)"
-  ) +
-  annotate(
-    "text", 
-    x = max(mergedData$iq) - 5, 
-    y = min(mergedData$score) + 5,
-    label = paste(equation3, "\n                          r =", r3),
-  )
-
-ggplotly(plot3, tooltip = "text")
 ```

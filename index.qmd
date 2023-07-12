@@ -20,6 +20,9 @@ mergedData <- read_rds(file = "mergedData.rds") |>
 mapData <- map_data("world") |>
   inner_join(mergedData, by = "region")
 
+mergedData
+mapData
+
 map1 <- mapData |>
   ggplot(aes(x = long, y = lat, group = group)) +
   geom_polygon(aes(fill = rank2021), color = "black") +
@@ -31,4 +34,6 @@ map1 <- mapData |>
     title = "Education Ranking by Country",
     fill = "Education Ranking"
   )
+
+map1
 ```
